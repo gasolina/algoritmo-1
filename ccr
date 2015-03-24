@@ -1,0 +1,81 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+struct regAmigo
+{char nombre[25];
+int edad;
+};
+
+void cargar(regAmigo vec[],int n)
+{int i;
+for(i=0;i<n;i++)
+	{cout<<"Ingrese el nombre: ";
+	cin>>(vec[i].nombre);
+	cout<<"Edad: ";
+	cin>>(vec[i].edad);
+}}
+
+void mostrar(regAmigo vec[],int n)
+{int i;
+for(i=0;i<n;i++)
+	cout<<endl<<vec[i].nombre<<" "<<vec[i].edad;
+}
+
+int edadmayor(regAmigo vec[],int n)
+{int mayor=vec[0].edad,i;
+for(i=0;i<n;i++)
+	{if(vec[i].edad>mayor)
+		{mayor=vec[i].edad;
+		}
+	}
+return mayor;
+}
+
+void nombreedadmayor(regAmigo vec[],int n)
+{int i,m=edadmayor(vec,n);
+for(i=0;i<n;i++)
+	{if(vec[i].edad==m)
+	cout<<"\n"<<vec[i].nombre<<" "<<vec[i].edad;
+	}
+}
+
+void eliminamayor(regAmigo vec[],int &n)
+{int i,k,mayor=edadmayor(vec,n);
+	for(i=0;i<n;i++)
+	{	if(vec[i].edad==mayor)
+		{	for(k=i;k<n-1;k++)
+			{vec[k]=vec[k+1];
+			}
+		n--;
+		i--;
+		}
+	}
+}
+
+void burbujaedad(regAmigo vec[],int &n)
+{int i,j;
+regAmigo aux;
+	for(i=0;i<n;i++)
+	{
+		for(j=i+1;j<n;j++)
+		{	if(vec[j].edad<vec[i].edad)
+			{aux=vec[i];
+			vec[i]=vec[j];
+			vec[j]=aux;
+			}
+		}
+	}
+}
+
+void main()
+{int nroAmigo;
+regAmigo vecAmi[20];
+cout<<"Cuantos amigos?: ";
+cin>>nroAmigo;
+cargar(vecAmi,nroAmigo);
+burbujaedad(vecAmi,nroAmigo);
+mostrar(vecAmi,nroAmigo);
+getch();
+}
