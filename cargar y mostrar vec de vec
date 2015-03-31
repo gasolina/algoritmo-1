@@ -1,0 +1,38 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+struct Telemento
+{int svec[20];
+};
+
+void cargar(Telemento vect[],int n)
+{int i,j;
+for(i=0;i<n;i++)
+	{for(j=0;j<n;j++)
+		{cout<<"Introducir un numero entero: ";
+		cin>>vect[i].svec[j];
+		}
+}}
+
+void mostrar(Telemento vect[],int n)
+{int i,j;
+for(i=0;i<n;i++)
+{
+	for(j=0;j<n;j++)
+	{cout<<vect[i].svec[j]<<" ";
+	}
+	cout<<endl;
+}
+}
+
+void main()
+{int n;
+Telemento vect[20];
+cout<<"Cuantos elementos: ";
+cin>>n;
+cargar(vect,n);
+mostrar(vect,n);
+getch();
+}
