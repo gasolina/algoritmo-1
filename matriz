@@ -1,0 +1,115 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+#define FIL 10
+#define COL 10
+
+void cargar(int mat[FIL][COL], int n, int m){
+	int i,j;
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){
+			cout << "Introducir dato para mat["<<i<<","<<j<<"] : ";
+			cin >> mat[i][j];
+		}
+	}
+}
+
+void mostrar(int mat[FIL][COL], int n, int m){
+	int i,j;
+	cout << "\nLa Matriz es --->> : \n";
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){
+			cout << mat[i][j] << "  ";
+		}
+		cout << endl;
+	}
+}
+
+int sumarTodo(int mat[FIL][COL], int n, int m){
+	int i,j,s=0;	
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){
+			s = s + mat[i][j];
+		}
+	}
+	return(s);
+}
+
+int sumarTriangSuperior(int mat[FIL][COL], int n, int m){
+	int i,j,s=0;	
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){
+			if(i<j){
+				s = s + mat[i][j];
+			}
+		}
+	}
+	return(s);
+}
+
+void mostrarSumaXfila(int mat[FIL][COL], int n, int m){
+	int i,j,s=0,t=0;	
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){	
+			s = s + mat[i][j];			
+		}
+		cout << "\n La suma de la fila : "<<i<<", es -->> : "<<s;
+		t = t + s;
+		s=0;
+	}
+	cout << "\n La suma total es -->> : "<<t;
+}
+
+void almacenarVectorSumaXfila(int mat[FIL][COL], int n, int m, int vec[]){
+	int i,j,s=0;	
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){	
+			s = s + mat[i][j];			
+		}
+		vec[i] = s;
+		s=0;
+	}	
+}
+
+void mostrarVector(int vec[], int n){
+	int i;
+	cout << "\nEl vector es --->> : \n";
+	for(i=0;i<n;i++){
+		cout << vec[i] << "  ";		
+	}
+}
+
+void main(){
+	int matriz[FIL][COL],nroFil,nroCol,opcion=0,vec[FIL];
+	cout << "Numero de filas ? : ";
+	cin >> nroFil;
+	cout << "Numero de columnas ? : ";
+	cin >> nroCol;
+	do{
+		cout<<endl<<endl<<"       <<***       M E N U         ***>>";
+		cout<<endl<<"1.- Cargar";
+		cout<<endl<<"2.- Mostrar";
+		cout<<endl<<"3.- Sumar todo";
+		cout<<endl<<"4.- Sumar triangular superior";
+		cout<<endl<<"5.- Sumar por fila";
+		cout<<endl<<"6.- Sumar por fila y almacenar en vector";
+		cout<<endl<<"0.- Salir";
+		cout<<endl<<"Seleccionar opcion : ";
+		cin >> opcion;
+		switch(opcion){
+			case 1 : cargar(matriz,nroFil,nroCol);
+					 break;
+			case 2 : mostrar(matriz,nroFil,nroCol);
+					 break;
+			case 3 : cout <<endl<<"La suma de toda la matriz es -->> "<<sumarTodo(matriz,nroFil,nroCol);
+					 break;
+			case 4 : cout <<endl<<"La suma de triangular superior es -->> "<<sumarTriangSuperior(matriz,nroFil,nroCol);
+					 break;
+			case 5 : mostrarSumaXfila(matriz,nroFil,nroCol);
+					 break;
+			case 6 : almacenarVectorSumaXfila(matriz,nroFil,nroCol,vec);
+					 mostrarVector(vec,nroFil);
+					 break;
+		}
+	}while(opcion != 0);	
+}
