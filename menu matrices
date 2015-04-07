@@ -1,0 +1,158 @@
+#include <iostream>
+#include <conio.h>
+# define FIL 10
+# define COL 10
+
+using namespace std;
+
+void cargar(int  mat[FIL][COL],int n,int m)
+{int i,j;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+	{	cout<<"Ingrese dato para mat ["<<i<<","<<j<<"]: ";
+		cin>>mat[i][j];
+	}
+}
+}
+
+void mostrar(int  mat[FIL][COL],int n,int m)
+{int i,j;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+	{cout<<mat[i][j]<<" ";
+	}
+cout<<endl;
+}
+}
+
+
+int sumartodo(int mat[FIL][COL],int n,int m)
+{int i,j,s=0;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+	{s=s+mat[i][j];
+	}
+}
+return s;
+}
+
+int sumatriangularsup(int mat[FIL][COL],int n,int m)
+{int i,j,s=0;
+for(i=0;i<n;i++)
+{	for(j=i+1;j<m;j++)
+	{s=s+mat[i][j];
+	}
+}
+return s;
+}
+
+void sumadefilas(int mat[FIL][COL],int n,int m)
+{int i,j,s=0,l=0;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+	{s=s+mat[i][j];
+	}
+	cout<<endl<<s;
+	l=l+s;
+	s=0;
+}
+cout<<endl<<l;
+}
+
+void almacenar(int mat[FIL][COL],int n,int m,int vec[])
+{int i,j,s=0;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+		{s=s+mat[i][j];
+		}
+	vec[i]=s;
+	s=0;
+}
+}
+
+void mostrarvector(int vec[],int n)
+{int i;
+cout<<"\nEl vector es: \n";
+for(i=0;i<n;i++)
+{cout<<vec[i]<<" ";
+}
+}
+
+void imparesyprimos(int mat[FIL][COL],int n,int m)
+{int i,j,impar=1,k=0;
+for(i=0;i<n;i++)
+{	for(j=0;j<m;j++)
+	{	if(i%2!=0)
+		{mat[i][j]=impar;
+			impar=impar+2;
+		}
+		else
+		{mat[i][j]=obtNsimoprimo(k);
+			k++;
+		}
+	}
+}
+cout<<mat[i][j];
+}
+
+bool primo(int n)
+{int i;
+bool k=true;
+for(i=0;i<n;i++)
+{if(n%i==0)
+	{k=false;
+	i=n;
+	}
+}
+return k;
+}
+
+int obtNsimoprimo(int n)
+{int c=0,cp=0;
+while(cp<n)
+{c++;
+	if(primo(c)==true)
+	{cp++;
+	}
+}
+return c;
+}
+
+
+void main()
+{int n,m,mat[FIL][COL],opcion,vec[FIL];
+cout<<"cuantas filas: ";
+cin>>n;
+cout<<"cuantas columnas: ";
+cin>>m;
+do
+{cout<<"\n\tMENU\n\n";
+cout<<"1.Cargar\n";
+cout<<"2.Mostrar\n";
+cout<<"3.Suma todo dentro de la matriz\n";
+cout<<"4.Suma del triangular superior\n";
+cout<<"5.Suma de las filas, y el total de su suma\n";
+cout<<"6.Almacenar en un vector\n";
+cout<<"0.Salir\n";
+cout<<"Escoja una opcion: ";
+cin>>opcion;
+switch(opcion)
+{case 1: cargar(mat,n,m);
+		break;
+case 2: mostrar(mat,n,m);
+		break;
+case 3: cout<<endl<<"La suma de toda la matriz es: "<<sumartodo(mat,n,m);
+		break;
+case 4: cout<<endl<<"La suma del triangular superior: "<<sumatriangularsup(mat,n,m);
+		break;
+case 5: sumadefilas(mat,n,m);
+		break;
+case 6: almacenar(mat,n,m,vec);
+		mostrarvector(vec,n);
+		break;
+}
+}
+while(opcion!=0);
+}
+
+
