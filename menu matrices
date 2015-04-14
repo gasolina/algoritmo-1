@@ -81,7 +81,7 @@ for(i=0;i<n;i++)
 bool primo(int n)
 {int i;
 bool k=true;
-for(i=0;i<n;i++)
+for(i=2;i<n;i++)
 {if(n%i==0)
 	{k=false;
 	i=n;
@@ -102,19 +102,21 @@ return c;
 }
 
 void imparesyprimos(int mat[FIL][COL],int n,int m)
-{int i,j,impar=1,k=0;
+{int i,j,impar=1,k=1;
 for(i=0;i<n;i++)
-{		if(i%2!=0)
-		{for(j=0;j<m;j++)
-		{
-		mat[i][j]=impar;
-			impar=impar+2;
-		}}
+	{	if(i%2!=0)
+			{for(j=0;j<m;j++)
+				{
+				mat[i][j]=impar;
+				impar=impar+2;
+				}
+			}
 		else
-		{for(j=0;j<m;j++)
-		{mat[i][j]=obtNsimoprimo(k);
-			k++;
-		}}
+			{for(j=0;j<m;j++)
+				{mat[i][j]=obtNsimoprimo(k);
+				k++;
+				}
+			}
 	}
 }
 
