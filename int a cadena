@@ -1,0 +1,19 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#define N 30
+
+
+using namespace std;
+
+void main()
+{int n;
+char cad[15];
+cout<<"Introducir numero: ";
+cin>>n;
+
+itoa(n,cad,10);
+
+cout<<"La cadena es: "<<cad;
+getch();
+}
