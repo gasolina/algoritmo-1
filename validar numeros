@@ -1,0 +1,52 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+
+using namespace std;
+
+int obtEntero()
+{int r=0,i=0;
+bool k=true;
+char cad[15];
+do
+{
+	do
+	{	gets(cad);
+	}
+
+	while(strlen(cad)==0);
+	i=0,k=true;
+	if(cad[0]=='-')
+	{i++;
+	if(strlen(cad)==1)
+		k=false;
+	}
+	while(i<strlen(cad))	
+	{
+		if((cad[i]!='0') && (cad[i]!='1') && (cad[i]!='2') && (cad[i]!='3') && (cad[i]!='4') &&
+		 (cad[i]!='5') && (cad[i]!='6') && (cad[i]!='7') && (cad[i]!='9'))
+		 {	k=false;
+			i=strlen(cad)+1;
+		 }
+		i++;
+	}
+	if(k==false)
+	{
+		cout<<"\nError! Introducir digito numerico: ";
+	}
+}
+while(k==false);
+r=atoi(cad);
+return(r);
+}
+
+void main()
+{int a,b,r;
+cout<<"Introducir un numero: ";
+a=obtEntero();
+cout<<"Introducir otro numero: ";
+b=obtEntero();
+r=a+b;
+cout<<"\nLa suma es: "<<r;
+getch();
+}
