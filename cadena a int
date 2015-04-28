@@ -1,0 +1,17 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+
+using namespace std;
+
+void main()
+{int n;
+char cad[15];
+cout<<"Introducir una cadena: ";
+gets(cad);
+
+n=atoi(cad);
+
+cout<<"El numero es: "<<n;
+getch();
+}
