@@ -1,0 +1,208 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+using namespace std;
+
+struct regAmigo
+{char nombre[30];
+int edad;
+char sexo;
+char estado;
+};
+
+void crearArchivo(char nomArch[])
+{ FILE *ptr;
+ptr=fopen(nomArch,"wb");
+fclose(ptr);
+}
+
+void agregarAmigo()
+{FILE *ptr;
+regAmigo reg;
+cout<<"Ingrese nombre: ";
+do
+{gets(reg.nombre);
+}
+while(strlen(reg.nombre)==0);
+
+do
+{cout<<"Ingrese edad: ";
+cin>>reg.edad;
+}
+while(reg.nombre<=0 || reg.edad>150);
+
+do
+{
+cout<<"Ingrese sexo F/M: ";
+cin>>reg.sexo;
+}
+while((reg.sexo!='F')&&(reg.sexo!='M'));
+
+reg.estado='S';
+ptr=fopen("amigos.dat","ab");
+fwrite(&reg,sizeof(reg),1,ptr);
+fclose(ptr);
+}
+
+
+void listarArchivos()
+{FILE *ptr;
+regAmigo reg;
+int c=0;
+ptr=fopen("amigos.dat","rb"); //abre el archivo en modo lectura
+if(ptr!=NULL) //verifica si el archivo existe
+{	cout<<endl<<"Los datos en el archivo son: \n";
+	fread(&reg,sizeof(reg),1,ptr); //lee un registro desde el archivo
+	while(feof(ptr)==false) //mientras no sea el final del archivo
+	{c++; 
+	if(reg.estado='S')
+		{
+		cout<<endl<<c<<".- "<<reg.nombre<<" "<<reg.edad<<" "<<reg.sexo;
+		}
+	fread(&reg,sizeof(reg),1,ptr); //lee registro desde el archivo
+	}
+	fclose(ptr);
+}
+else
+{ cout<<"Archivo no existe!!";
+}
+}
+
+
+void buscar(int nroReg)
+{FILE *ptr;
+regAmigo reg;
+ptr=fopen("amigos.dat","rb"); 
+if(ptr!=NULL)
+{	fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
+	fread(&reg,sizeof(reg),1,ptr);
+	if(feof(ptr)==false)
+	{	cout<<endl<<reg.nombre<<" "<<reg.edad<<" "<<reg.sexo;
+	}
+	else
+	{cout<<"Regisro no existe porque fue eliminado\n";
+	}
+	fclose(ptr);
+}
+else
+{	cout<<"El archivo no existe";
+}
+}
+
+void modificar(int nroReg)
+{FILE *ptr;
+regAmigo reg;
+ptr=fopen("amigos.dat","r+b"); 
+if(ptr!=NULL)
+{	fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
+	fread(&reg,sizeof(reg),1,ptr);
+	if(feof(ptr)==false)
+	{	cout<<endl<<reg.nombre<<" "<<reg.edad<<" "<<reg.sexo;
+		cout<<"\nIngrese nombre: ";
+		do
+		{gets(reg.nombre);
+		}
+		while(strlen(reg.nombre)==0);
+
+		do
+		{cout<<"Ingrese edad: ";
+		cin>>reg.edad;
+		}
+		while(reg.nombre<=0 || reg.edad>150);
+
+		do
+		{
+		cout<<"Ingrese sexo F/M: ";
+		cin>>reg.sexo;
+		}
+		while((reg.sexo!='F')&&(reg.sexo!='M'));
+		fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
+		fwrite(&reg,sizeof(reg),1,ptr);
+	}
+	else
+	{cout<<"\nRegisro no existe porque fue eliminado \n";
+	}
+	fclose(ptr);
+}
+else
+{	cout<<"\nEl archivo no existe";
+}
+}
+
+void eliminar(int nroReg)
+{FILE *ptr;
+regAmigo reg;
+int op;
+ptr=fopen("amigos.dat","r+b"); 
+if(ptr!=NULL)
+{	fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
+	fread(&reg,sizeof(reg),1,ptr);
+	if(feof(ptr)==false)
+	{	if(reg.estado=='S')
+		{
+			cout<<endl<<reg.nombre<<" "<<reg.edad<<" "<<reg.sexo;
+			cout<<"\n1.- Confimar\n2.- Cancelar\nSeleccionar opcion: ";
+			cin>>op;
+			if(op==1)
+			{
+				reg.estado='N';
+				fseek(ptr,(nroReg-1)*sizeof(reg),SEEK_SET);
+				fwrite(&reg,sizeof(reg),1,ptr);
+				cout<<"\nRegistro SI fue eliminado exitosamente\n";
+			}
+			else
+			{cout<<"Registro NO fue eliminado\n";
+			}
+		}
+		else
+		{cout<<"Regisro NO existe porque fue eliminado\n";
+		}
+	}
+	else
+	{cout<<"Regisro NO existe\n";
+	}
+fclose(ptr);
+}
+else
+{	cout<<"El archivo no existe";
+}
+}
+
+void main()
+{int opcion,nroReg;
+do
+{cout<<"\n\tMENU\n";
+cout<<"1.Crear archivo\n";
+cout<<"2.Agregar amigo\n";
+cout<<"3.Listar o mostrar amigos\n";
+cout<<"4.Buscar y mostar\n";
+cout<<"5.Modificar un registro\n";
+cout<<"6.Eliminar un registro\n";
+cout<<"0.Salir\n";
+cout<<"Ingrese opcion: ";
+cin>>opcion;
+switch(opcion)
+{case 1:crearArchivo("amigos.dat");
+		break;
+case 2:agregarAmigo();
+		break;
+case 3:listarArchivos();
+		break;
+case 4:cout<<"Introducir el numero de registro a buscar: ";
+		cin>>nroReg;
+		buscar(nroReg);
+break;
+case 5:cout<<"Introducir el numero de registro a modificar: ";
+		cin>>nroReg;
+		modificar(nroReg);
+break;
+case 6:cout<<"Introducir el numero de registro a eliminar: ";
+		cin>>nroReg;
+		eliminar(nroReg);
+break;
+}
+}
+while(opcion!=0);
+}
